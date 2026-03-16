@@ -1011,7 +1011,7 @@ const HomeView = ({ go }) => {
         className="hlift"
         onClick={() => go("tutor")}
         style={{
-          background: `linear-gradient(135deg, #111530 0%, ${T.card} 100%)`,
+          background: T.card,
           borderRadius: 16,
           padding: "22px 26px",
           border: `1px solid ${T.borderLight}`,
@@ -1163,6 +1163,154 @@ const HomeView = ({ go }) => {
 const PathwayView = ({ go }) => {
   const [expandedGap, setExpandedGap] = useState(null);
   const [activeStep, setActiveStep] = useState(null);
+  const [quizActive, setQuizActive] = useState(false);
+  const [quizQIdx, setQuizQIdx] = useState(0);
+  const [quizSelected, setQuizSelected] = useState(null);
+  const [quizShowResult, setQuizShowResult] = useState(false);
+  const [quizDone, setQuizDone] = useState(false);
+  const [quizScore, setQuizScore] = useState(null);
+  const [quizCorrect, setQuizCorrect] = useState(0);
+
+  const moaQuiz = [
+    {
+      q: "What is the primary mechanism by which Ozempic (semaglutide) lowers blood glucose?",
+      opts: [
+        { id: "A", text: "Inhibits SGLT2 to block renal glucose reabsorption" },
+        { id: "B", text: "Selectively activates GLP-1 receptors to stimulate glucose-dependent insulin secretion" },
+        { id: "C", text: "Activates both GLP-1 and GIP receptors simultaneously" },
+        { id: "D", text: "Inhibits DPP-4 to increase endogenous incretin levels" },
+      ],
+      correct: "B",
+      expl: "Semaglutide is a **selective GLP-1 receptor agonist**. It mimics the GLP-1 incretin hormone, stimulating insulin secretion only when glucose is elevated, suppressing glucagon, slowing gastric emptying, and reducing appetite. It does not activate GIP receptors — that distinguishes tirzepatide (Mounjaro).",
+    },
+    {
+      q: "How does tirzepatide (Mounjaro) differ mechanistically from semaglutide (Ozempic)?",
+      opts: [
+        { id: "A", text: "Tirzepatide inhibits DPP-4 while semaglutide is a direct GLP-1 agonist" },
+        { id: "B", text: "Both are GLP-1 RAs but tirzepatide has a significantly longer half-life" },
+        { id: "C", text: "Tirzepatide is a dual GIP + GLP-1 receptor agonist; semaglutide targets GLP-1 only" },
+        { id: "D", text: "Tirzepatide selectively targets GIP receptors while semaglutide targets GLP-1" },
+      ],
+      correct: "C",
+      expl: "Tirzepatide activates **both GIP and GLP-1 receptors simultaneously**, while semaglutide is a **single-target GLP-1 RA**. This dual incretin co-agonism is the core mechanistic differentiator — not half-life or class. Memorize this as the foundation of every competitive MOA conversation.",
+    },
+    {
+      q: "GLP-1 and GIP are both incretin hormones released in response to meals. Which statement correctly describes their anatomical origin?",
+      opts: [
+        { id: "A", text: "GLP-1 is secreted by K-cells in the proximal gut; GIP by L-cells in the distal gut" },
+        { id: "B", text: "GLP-1 is secreted by L-cells in the distal gut; GIP by K-cells in the proximal gut" },
+        { id: "C", text: "GIP suppresses glucagon while GLP-1 stimulates it — both from pancreatic alpha cells" },
+        { id: "D", text: "Both are secreted from identical cell types concentrated in the ileum" },
+      ],
+      correct: "B",
+      expl: "**GLP-1** is secreted by **L-cells** in the distal intestine (ileum/colon), while **GIP** is secreted by **K-cells** in the proximal gut (duodenum/jejunum). Understanding this anatomical difference helps explain why tirzepatide's dual agonism is mechanistically synergistic — it activates two complementary incretin pathways from different gut segments.",
+    },
+    {
+      q: "The SELECT trial is a key differentiator for Ozempic. Which patient population was enrolled?",
+      opts: [
+        { id: "A", text: "Newly diagnosed type 2 diabetes patients without cardiovascular history" },
+        { id: "B", text: "Adolescent patients with obesity and metabolic syndrome" },
+        { id: "C", text: "Patients with overweight or obesity and established cardiovascular disease, but without diabetes" },
+        { id: "D", text: "Patients with type 1 diabetes on background insulin therapy" },
+      ],
+      correct: "C",
+      expl: "SELECT enrolled patients with **established cardiovascular disease but without diabetes**, demonstrating a **20% reduction in MACE**. This is Ozempic's most powerful differentiator for cardiologists — it's the only GLP-1 RA with robust CV outcomes data in a non-diabetic obese population.",
+    },
+    {
+      q: "Compared to semaglutide, tirzepatide's dual mechanism produces approximately what difference in A1C reduction in clinical trials?",
+      opts: [
+        { id: "A", text: "Both agents produce equivalent A1C reduction of approximately 1.5%" },
+        { id: "B", text: "Semaglutide reduces A1C approximately 0.6% more than tirzepatide" },
+        { id: "C", text: "Tirzepatide reduces A1C ~2.4% vs semaglutide's ~1.8%" },
+        { id: "D", text: "Tirzepatide shows no significant difference vs semaglutide in head-to-head trials" },
+      ],
+      correct: "C",
+      expl: "**Tirzepatide** achieves approximately **~2.4% A1C reduction** vs semaglutide's **~1.8%** — driven by its dual GIP+GLP-1 mechanism. Acknowledge this data confidently, then pivot to Ozempic's **CV outcomes evidence** (SELECT, SUSTAIN 6), which tirzepatide has not yet matched.",
+    },
+    {
+      q: "Which SUSTAIN trial is most relevant for head-to-head competitive discussions positioning Ozempic against another GLP-1 agent?",
+      opts: [
+        { id: "A", text: "SUSTAIN 1 — semaglutide monotherapy vs placebo" },
+        { id: "B", text: "SUSTAIN 6 — CV outcomes in high-risk T2D patients" },
+        { id: "C", text: "SUSTAIN 7 — head-to-head semaglutide vs dulaglutide" },
+        { id: "D", text: "SUSTAIN 10 — semaglutide vs empagliflozin" },
+      ],
+      correct: "C",
+      expl: "**SUSTAIN 7** directly compared semaglutide head-to-head against dulaglutide (Trulicity), showing superior A1C and weight reductions. Don't neglect **SUSTAIN 6** either — it demonstrated CV risk reduction in high-risk T2D and was foundational for Ozempic's cardiovascular label. Both are valuable depending on the HCP's focus.",
+    },
+    {
+      q: "When an HCP objects that Ozempic's CV data 'doesn't apply' to their low-risk T2D patients, which response framework is most effective?",
+      opts: [
+        { id: "A", text: "Immediately pivot to SUSTAIN 7 A1C data without addressing the objection" },
+        { id: "B", text: "Agree with the HCP and shift the conversation entirely to weight loss benefits" },
+        { id: "C", text: "Acknowledge the point, bridge to SUSTAIN population-level efficacy data, then note how CV risk evolves over time" },
+        { id: "D", text: "Counter-argue that all type 2 diabetes patients have inherent CV risk" },
+      ],
+      correct: "C",
+      expl: "The **Acknowledge → Bridge → Seed** framework: (1) **Validate** — 'Fair point — SELECT was specifically for patients with established CV disease.' (2) **Bridge** — 'For your lower-risk patients, the SUSTAIN program showed ~1.8% A1C reduction and ~4.5kg weight loss.' (3) **Seed** — 'As their risk profile evolves, they'll already be on a therapy with the most robust long-term CV evidence.' Your Echo feedback flagged skipping step 1.",
+    },
+    {
+      q: "GIP receptor activation in tirzepatide contributes to its metabolic effects primarily through which mechanism?",
+      opts: [
+        { id: "A", text: "Blocking renal glucose reabsorption via SGLT2 pathway modulation" },
+        { id: "B", text: "Direct suppression of hepatic glucose production independent of insulin" },
+        { id: "C", text: "Complementary insulin secretion and adipocyte signaling that amplifies weight loss" },
+        { id: "D", text: "Inhibiting alpha-cell glucagon secretion more potently than GLP-1 agonism alone" },
+      ],
+      correct: "C",
+      expl: "GIP receptor co-agonism contributes **complementary insulin secretion** and activates adipocyte GIP receptors, which may enhance lipid metabolism and amplify weight loss beyond GLP-1 agonism alone. This mechanistic synergy helps explain why tirzepatide produces numerically greater weight loss than semaglutide at comparable doses.",
+    },
+    {
+      q: "A cardiologist asks: 'Why should I use Ozempic over Mounjaro for a patient with T2D and a recent MI?' Your strongest response highlights:",
+      opts: [
+        { id: "A", text: "Ozempic's longer market history and greater physician familiarity overall" },
+        { id: "B", text: "The 20% MACE reduction established across SUSTAIN 6 and SELECT — the most robust CV outcomes data in the GLP-1 class" },
+        { id: "C", text: "Ozempic's lower injection volume and more flexible dosing schedule" },
+        { id: "D", text: "The fact that tirzepatide has not yet received a dedicated CV risk reduction indication" },
+      ],
+      correct: "B",
+      expl: "For a **post-MI patient**, anchor on CV outcomes data: **SUSTAIN 6** showed significant MACE reduction in high-risk T2D, and **SELECT** confirmed this in a broader CV population. Option A is weak positioning; C is not unique to Ozempic; D is technically accurate but not the most compelling argument — always lead with your evidence.",
+    },
+    {
+      q: "Which statement BEST positions Ozempic against Mounjaro in a conversation with an evidence-focused endocrinologist?",
+      opts: [
+        { id: "A", text: "'Ozempic and Mounjaro work essentially the same way — the choice comes down to patient preference.'" },
+        { id: "B", text: "'Mounjaro's dual mechanism may show stronger glycemic control, but Ozempic's CV outcomes evidence — including a 20% MACE reduction in SELECT — is unmatched for your higher-risk patients.'" },
+        { id: "C", text: "'Ozempic has demonstrated better glycemic control than Mounjaro across all patient populations.'" },
+        { id: "D", text: "'Mounjaro is essentially an updated version of Ozempic with an additional receptor target.'" },
+      ],
+      correct: "B",
+      expl: "**Effective competitive positioning** acknowledges the competitor's strength (tirzepatide's superior glycemic profile) rather than dismissing it, then pivots to your product's genuine differentiator (CV outcomes evidence). Option B demonstrates clinical credibility through intellectual honesty while clearly articulating Ozempic's unique value for higher-risk patients.",
+    },
+  ];
+
+  const handleQuizSelect = (optId) => {
+    if (quizShowResult) return;
+    setQuizSelected(optId);
+    setQuizShowResult(true);
+    if (optId === moaQuiz[quizQIdx].correct) setQuizCorrect((c) => c + 1);
+  };
+
+  const handleQuizNext = () => {
+    const isLast = quizQIdx === moaQuiz.length - 1;
+    if (isLast) {
+      setQuizScore(Math.round((quizCorrect / moaQuiz.length) * 100));
+      setQuizDone(true);
+    } else {
+      setQuizQIdx((qi) => qi + 1);
+      setQuizSelected(null);
+      setQuizShowResult(false);
+    }
+  };
+
+  const handleQuizRetry = () => {
+    setQuizQIdx(0);
+    setQuizSelected(null);
+    setQuizShowResult(false);
+    setQuizDone(false);
+    setQuizScore(null);
+    setQuizCorrect(0);
+  };
 
   const echoResult = {
     cert: "Ozempic® Competitive Intelligence",
@@ -1323,8 +1471,14 @@ const PathwayView = ({ go }) => {
     },
   ];
 
-  const done = steps.filter((s) => s.status === "complete").length;
-  const pct = Math.round((done / steps.length) * 100);
+  const effectiveStatus = (s) => {
+    if (s.id === 3 && quizDone && quizScore > 60) return "complete";
+    if (s.id === 4 && quizDone && quizScore > 60) return "current";
+    return s.status;
+  };
+
+  const completedCount = steps.filter((s) => effectiveStatus(s) === "complete").length;
+  const pct = Math.round((completedCount / steps.length) * 100);
 
   return (
     <div
@@ -1580,13 +1734,13 @@ const PathwayView = ({ go }) => {
                 fontFamily: "'Outfit',sans-serif",
               }}
             >
-              {done}/{steps.length} · {pct}%
+              {completedCount}/{steps.length} · {pct}%
             </span>
           </div>
           <Bar value={pct} color={T.blue} h={7} />
         </div>
         <div style={{ fontSize: 11, color: T.textMuted, whiteSpace: "nowrap" }}>
-          Est. {Math.ceil((steps.length - done) * 0.8)}h remaining
+          Est. {Math.ceil((steps.length - completedCount) * 0.8)}h remaining
         </div>
       </div>
 
@@ -1626,9 +1780,11 @@ const PathwayView = ({ go }) => {
             }}
           >
             {steps.map((s, i) => {
-              const done = s.status === "complete",
-                cur = s.status === "current",
-                lock = s.status === "locked";
+              const eff = effectiveStatus(s);
+              const done = eff === "complete";
+              const cur = eff === "current";
+              const lock = eff === "locked";
+              const displayScore = s.id === 3 && quizDone ? quizScore : s.score;
               const gapObj = gaps.find((g) => g.id === s.gap);
               const expanded = activeStep === s.id;
               return (
@@ -1729,7 +1885,7 @@ const PathwayView = ({ go }) => {
                           )}
                         </div>
                       </div>
-                      {done && s.score && (
+                      {done && displayScore != null && (
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                           <div
                             style={{
@@ -1739,30 +1895,34 @@ const PathwayView = ({ go }) => {
                               fontFamily: "'Outfit',sans-serif",
                             }}
                           >
-                            {s.score}%
+                            {displayScore}%
                           </div>
                         </div>
                       )}
-                      {cur && (
+                      {cur && !(s.id === 3 && quizActive) && (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
+                            if (s.id === 3) {
+                              setQuizActive(true);
+                              setActiveStep(3);
+                            }
                           }}
                           style={{
                             padding: "7px 16px",
                             borderRadius: 8,
                             border: "none",
-                            background: T.blue,
+                            background: s.id === 3 ? T.teal : T.blue,
                             color: T.white,
                             fontSize: 11.5,
                             fontWeight: 600,
                             cursor: "pointer",
                             fontFamily: "'Outfit',sans-serif",
                             flexShrink: 0,
-                            boxShadow: `0 4px 14px ${T.blue}25`,
+                            boxShadow: `0 4px 14px ${s.id === 3 ? T.teal : T.blue}25`,
                           }}
                         >
-                          Continue
+                          {s.id === 3 ? "Start Quiz" : "Continue"}
                         </button>
                       )}
                       {lock && (
@@ -1780,41 +1940,93 @@ const PathwayView = ({ go }) => {
                       <div
                         style={{
                           margin: "6px 0 0",
-                          padding: "14px 16px",
                           background: T.cardRaised,
                           borderRadius: 10,
                           border: `1px solid ${T.border}`,
                           animation: "scaleIn .2s ease",
-                          fontSize: 12.5,
-                          color: T.textSoft,
-                          lineHeight: 1.6,
+                          overflow: "hidden",
                         }}
                       >
-                        {s.detail}
-                        {done && (
-                          <div
-                            style={{
-                              marginTop: 10,
-                              padding: "10px 14px",
-                              background: T.emeraldDim,
-                              borderRadius: 8,
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 8,
-                            }}
-                          >
-                            <span
-                              style={{
-                                color: T.emerald,
-                                fontWeight: 700,
-                                fontSize: 12,
-                              }}
-                            >
-                              Completed
-                            </span>
-                            <span style={{ color: T.textMuted, fontSize: 11 }}>
-                              Score: {s.score}%
-                            </span>
+                        {s.id === 3 && quizActive && !quizDone ? (
+                          <div>
+                            <div style={{ padding: "10px 16px", background: `${T.teal}0A`, borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                              <span style={{ fontSize: 11, fontWeight: 600, color: T.teal, letterSpacing: 0.3 }}>Knowledge Check — MOA Differentiation</span>
+                              <span style={{ fontSize: 11, color: T.textMuted }}>Question {quizQIdx + 1} / {moaQuiz.length}</span>
+                            </div>
+                            <div style={{ padding: "14px 16px" }}>
+                              <p style={{ fontSize: 12.5, color: T.text, lineHeight: 1.6, margin: "0 0 12px", fontStyle: "italic" }}>{moaQuiz[quizQIdx].q}</p>
+                              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                                {moaQuiz[quizQIdx].opts.map((o) => {
+                                  const sel = quizSelected === o.id;
+                                  const correct = o.id === moaQuiz[quizQIdx].correct;
+                                  const show = quizShowResult;
+                                  let bc = T.border, bg = T.card;
+                                  if (show && correct) { bc = T.emerald; bg = T.emeraldDim; }
+                                  else if (show && sel && !correct) { bc = T.rose; bg = T.roseDim; }
+                                  else if (sel && !show) { bc = T.teal; bg = `${T.teal}12`; }
+                                  return (
+                                    <button key={o.id} onClick={() => handleQuizSelect(o.id)} disabled={quizShowResult}
+                                      style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "10px 12px", borderRadius: 9, border: `1.5px solid ${bc}`, background: bg, cursor: quizShowResult ? "default" : "pointer", transition: "all .15s", textAlign: "left", width: "100%", fontFamily: "'Outfit',sans-serif" }}
+                                    >
+                                      <span style={{ width: 20, height: 20, borderRadius: 5, flexShrink: 0, background: show && correct ? T.emerald : show && sel ? T.rose : sel ? T.teal : T.surface, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: sel || (show && correct) ? T.white : T.textMuted }}>
+                                        {o.id}
+                                      </span>
+                                      <span style={{ fontSize: 12, color: T.text, lineHeight: 1.45 }}>{o.text}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                              {quizShowResult && (
+                                <div>
+                                  <div style={{ marginTop: 12, padding: "12px 14px", background: quizSelected === moaQuiz[quizQIdx].correct ? T.emeraldDim : T.roseDim, borderRadius: 9, animation: "fadeUp .3s ease", borderLeft: `3px solid ${quizSelected === moaQuiz[quizQIdx].correct ? T.emerald : T.rose}` }}>
+                                    <div style={{ fontSize: 11.5, fontWeight: 700, color: quizSelected === moaQuiz[quizQIdx].correct ? T.emerald : T.rose, marginBottom: 5 }}>
+                                      {quizSelected === moaQuiz[quizQIdx].correct ? "Correct!" : "Not quite."}
+                                    </div>
+                                    <div style={{ fontSize: 11.5, color: T.textSoft, lineHeight: 1.6 }}
+                                      dangerouslySetInnerHTML={{ __html: moaQuiz[quizQIdx].expl.replace(/\*\*(.*?)\*\*/g, `<strong style="color:${T.text}">$1</strong>`).replace(/\n/g, "<br/>") }}
+                                    />
+                                  </div>
+                                  <button onClick={handleQuizNext} style={{ marginTop: 10, width: "100%", padding: "10px", borderRadius: 9, border: "none", background: T.teal, color: T.white, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+                                    {quizQIdx === moaQuiz.length - 1 ? "Finish Quiz" : "Next Question →"}
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ) : s.id === 3 && quizDone ? (
+                          <div style={{ padding: "20px 16px" }}>
+                            <div style={{ textAlign: "center", marginBottom: 14 }}>
+                              <div style={{ fontSize: 32, fontWeight: 800, color: quizScore > 60 ? (quizScore >= 80 ? T.emerald : T.amber) : T.rose, fontFamily: "'Outfit',sans-serif" }}>{quizScore}%</div>
+                              <div style={{ fontSize: 12, color: T.textSoft, marginTop: 4 }}>
+                                {quizScore > 60 ? (quizScore >= 80 ? "Excellent — pathway step complete! Payer Objection Handling Workshop is now unlocked." : "Good effort — pathway step complete! Payer Objection Handling Workshop is now unlocked.") : "Score below 61% — review the MOA concepts and retake to continue your pathway."}
+                              </div>
+                            </div>
+                            {quizScore > 60 ? (
+                              <div style={{ padding: "10px 14px", background: T.emeraldDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                                <span style={{ color: T.emerald, fontWeight: 700, fontSize: 12 }}>Completed</span>
+                                <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {quizScore}%</span>
+                              </div>
+                            ) : (
+                              <div>
+                                <div style={{ padding: "10px 14px", background: T.roseDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8, marginBottom: 10, borderLeft: `3px solid ${T.rose}` }}>
+                                  <span style={{ color: T.rose, fontWeight: 700, fontSize: 12 }}>Not passed</span>
+                                  <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {quizScore}% · Minimum required: 61%</span>
+                                </div>
+                                <button onClick={handleQuizRetry} style={{ width: "100%", padding: "10px", borderRadius: 9, border: `1.5px solid ${T.teal}`, background: "transparent", color: T.teal, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+                                  Retake Quiz
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div style={{ padding: "14px 16px", fontSize: 12.5, color: T.textSoft, lineHeight: 1.6 }}>
+                            {s.detail}
+                            {done && (
+                              <div style={{ marginTop: 10, padding: "10px 14px", background: T.emeraldDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                                <span style={{ color: T.emerald, fontWeight: 700, fontSize: 12 }}>Completed</span>
+                                <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {displayScore}%</span>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -4878,7 +5090,6 @@ const CompetenciesView = () => {
                 marginBottom: 12,
               }}
             >
-              <span style={{ fontSize: 14 }}>⚡</span>
               <h3
                 style={{
                   fontSize: 14,
@@ -4944,15 +5155,7 @@ const CompetenciesView = () => {
                           fontSize: 18,
                         }}
                       >
-                        {r.type === "Course"
-                          ? "📖"
-                          : r.type === "AI Module"
-                            ? "🧠"
-                            : r.type.includes("AI Tutor")
-                              ? "⚡"
-                              : r.type === "Workshop"
-                                ? "🎯"
-                                : "📋"}
+                        {""}
                       </div>
                       <div style={{ flex: 1 }}>
                         <div
@@ -7104,7 +7307,7 @@ const LibraryView = () => {
               flexShrink: 0,
             }}
           >
-            ⚡
+            AI
           </div>
           <div
             style={{
@@ -7133,7 +7336,6 @@ const LibraryView = () => {
             alignItems: "flex-start",
           }}
         >
-          <span style={{ fontSize: 14, flexShrink: 0 }}>⚠️</span>
           <div
             style={{
               fontSize: 12,
@@ -7449,17 +7651,17 @@ const LibraryView = () => {
               </span>
               {isAiModule && (
                 <Badge color={T.violet} size="xs">
-                  ⚡ AI-Generated
+                  AI-Generated
                 </Badge>
               )}
               {isCompliance && (
                 <Badge color={T.amber} size="xs">
-                  ⚠️ Required
+                  Required
                 </Badge>
               )}
               {isWorkshop && (
                 <Badge color={T.teal} size="xs">
-                  🎯 Interactive
+                  Interactive
                 </Badge>
               )}
             </div>
@@ -7520,7 +7722,6 @@ const LibraryView = () => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ fontSize: 16 }}>🎮</span>
               <span style={{ fontSize: 11, fontWeight: 600, color: T.orange }}>
                 Gamified Content
               </span>
@@ -7813,7 +8014,7 @@ const LibraryView = () => {
                   fontWeight: 600,
                 }}
               >
-                🎮 Gamified
+                Gamified
               </div>
             )}
             <div
@@ -9140,7 +9341,7 @@ const PreCallView = () => {
         <div style={{ animation: "scaleIn .25s ease" }}>
           <div
             style={{
-              background: `linear-gradient(135deg, ${T.card} 0%, #101525 100%)`,
+              background: T.card,
               borderRadius: 16,
               padding: "24px 26px",
               border: `1px solid ${T.borderLight}`,
@@ -9154,7 +9355,6 @@ const PreCallView = () => {
                 marginBottom: 16,
               }}
             >
-              <span style={{ fontSize: 18 }}>⚡</span>
               <h3
                 style={{
                   fontSize: 16,
@@ -10309,9 +10509,9 @@ const ProfileView = () => {
   ];
 
   const milestones = [
-    { icon: "🏆", label: "First Certification", date: "Dec 2025" },
-    { icon: "⭐", label: "Triple Certified", date: "Feb 2026" },
-    { icon: "⚡", label: "AI Tutor Power User", date: "Mar 2026" },
+    { icon: "", label: "First Certification", date: "Dec 2025" },
+    { icon: "", label: "Triple Certified", date: "Feb 2026" },
+    { icon: "", label: "AI Tutor Power User", date: "Mar 2026" },
   ];
 
   const preferences = [
@@ -10360,7 +10560,7 @@ const ProfileView = () => {
       {/* Profile Header */}
       <div
         style={{
-          background: `linear-gradient(135deg, #101430 0%, ${T.card} 60%, #0F1520 100%)`,
+          background: T.card,
           borderRadius: 20,
           padding: "28px 30px",
           border: `1px solid ${T.border}`,
@@ -11074,7 +11274,6 @@ const ProfileView = () => {
                 marginBottom: 10,
               }}
             >
-              <span style={{ fontSize: 14 }}>⚡</span>
               <span
                 style={{
                   fontSize: 12,
@@ -11540,7 +11739,7 @@ const MgrDashView = () => {
       {/* Welcome */}
       <div
         style={{
-          background: `linear-gradient(135deg, #0E1230 0%, ${T.card} 100%)`,
+          background: T.card,
           borderRadius: 18,
           padding: "24px 28px",
           border: `1px solid ${T.border}`,
@@ -11701,25 +11900,25 @@ const MgrDashView = () => {
             color: T.rose,
             title: "At-Risk: James Morrison",
             desc: "Readiness score 32%. Only 1 certification passed. AI Tutor engagement critically low (2 sessions total). Recommend immediate coaching intervention.",
-            icon: "⚠️",
+            icon: "",
           },
           {
             color: T.rose,
             title: "At-Risk: Emily Watson",
             desc: "Readiness score 48%, trending down. Time-to-certify 2.3x above team average. Streak broken — 0 learning days this week.",
-            icon: "⚠️",
+            icon: "",
           },
           {
             color: T.amber,
             title: "Team Gap: Payer Objection Handling",
             desc: "4 of 6 reps scored below 60% on payer-related competencies. Consider team workshop or Echo scenario refresh.",
-            icon: "📊",
+            icon: "",
           },
           {
             color: T.emerald,
             title: "Top Performer: Lisa Thompson",
             desc: "100% certification rate, lowest TTC (3.9d), highest readiness (95%). Candidate for peer mentoring or SME content contributor.",
-            icon: "⭐",
+            icon: "",
           },
         ].map((a, i) => (
           <div
@@ -11953,13 +12152,7 @@ const MgrDashView = () => {
                       color: i < 3 ? T.amber : T.textMuted,
                     }}
                   >
-                    {i === 0
-                      ? "🥇"
-                      : i === 1
-                        ? "🥈"
-                        : i === 2
-                          ? "🥉"
-                          : `#${i + 1}`}
+                    {`#${i + 1}`}
                   </span>
                   <div
                     style={{
@@ -12089,7 +12282,7 @@ const MgrDashView = () => {
             </div>
             <div style={{ fontSize: 12, color: T.textSoft, lineHeight: 1.6 }}>
               <span style={{ color: T.emerald, fontWeight: 600 }}>
-                ⚡ AI Insight:
+                AI Insight:
               </span>{" "}
               Reps with active streaks (3+ days) have{" "}
               <span style={{ color: T.emerald, fontWeight: 600 }}>
@@ -13174,7 +13367,7 @@ const MgrCompView = () => {
               Affected reps: {g.reps}
             </div>
             <div style={{ fontSize: 12, color: T.blue, fontWeight: 500 }}>
-              ⚡ AI Recommendation: {g.action}
+              AI Recommendation: {g.action}
             </div>
           </div>
         ))}
@@ -13217,7 +13410,7 @@ const MgrInsightsView = () => (
         {
           severity: "critical",
           color: T.rose,
-          icon: "🚨",
+          icon: "",
           title: "James Morrison — Predicted to fail next Echo attempt",
           detail:
             "Based on current trajectory (readiness 32%, declining trend, only 2 AI Tutor sessions), the model predicts a 15% pass probability for Dupixent® Clinical certification. Without intervention, estimated time-to-certify exceeds 30 days.",
@@ -13227,7 +13420,7 @@ const MgrInsightsView = () => (
         {
           severity: "warning",
           color: T.amber,
-          icon: "⚠️",
+          icon: "",
           title: "Emily Watson — Engagement declining",
           detail:
             "Learning streak broken. AI Tutor usage dropped 70% this month vs last. She's in remediation for Ozempic® CI but hasn't opened Tutor in 5 days. Readiness trending from 58 → 48 over past 3 weeks.",
@@ -13237,7 +13430,7 @@ const MgrInsightsView = () => (
         {
           severity: "positive",
           color: T.emerald,
-          icon: "✅",
+          icon: "",
           title: "Sarah Chen — On track for re-certification by Mar 24",
           detail:
             "Remediation pathway 37% complete with strong quiz scores (88%, 91%). AI Tutor engagement is high (14 sessions). MOA Differentiation gap improved from 38 → 58. Model predicts 78% pass probability on next Echo attempt.",
@@ -13247,7 +13440,7 @@ const MgrInsightsView = () => (
         {
           severity: "positive",
           color: T.emerald,
-          icon: "✅",
+          icon: "",
           title: "Marcus Rivera — Ready for advanced certification",
           detail:
             "Readiness score 91% with upward trend. 4 of 5 certifications complete. High AI Tutor engagement. Consistently scores 80%+ across all competencies.",
@@ -13257,7 +13450,7 @@ const MgrInsightsView = () => (
         {
           severity: "info",
           color: T.blue,
-          icon: "📊",
+          icon: "",
           title: "Team Forecast: Ozempic® CI certification completion",
           detail:
             "At current pace, estimated full team certification for Ozempic® Competitive Intelligence: 4 of 6 reps by April 15. James Morrison and Emily Watson are the primary blockers. Without intervention, James is unlikely to certify before May.",
@@ -13267,7 +13460,7 @@ const MgrInsightsView = () => (
         {
           severity: "info",
           color: T.violet,
-          icon: "🧠",
+          icon: "",
           title: "Content Effectiveness Signal",
           detail:
             "Reps who complete the 'Competitive Landscape: Mounjaro vs Ozempic' AI Module show an average 23-point improvement in Echo scores for MOA-related competencies. This module has the highest learning-to-performance correlation on the platform.",
@@ -13637,28 +13830,28 @@ const MgrReportsView = () => (
         {
           title: "Team Certification Status",
           desc: "Complete team certification matrix showing all reps, all certifications, pass/fail status, attempt counts, and time-to-certify metrics.",
-          icon: "📋",
+          icon: "",
           type: "Auto-generated",
           freq: "Real-time",
         },
         {
           title: "Competency Gap Analysis",
           desc: "Heatmap view of competency scores across all reps with systemic gap identification and trend analysis.",
-          icon: "📊",
+          icon: "",
           type: "Auto-generated",
           freq: "Weekly",
         },
         {
           title: "Echo Performance Summary",
           desc: "All Echo attempt scores, pass rates, and score improvement trends across the team. Includes per-certification breakdowns.",
-          icon: "🎯",
+          icon: "",
           type: "Auto-generated",
           freq: "Real-time",
         },
         {
           title: "AI Tutor Engagement Report",
           desc: "Session counts, modes used, topics covered, and learning time per rep. Identifies under-engaged reps for coaching.",
-          icon: "⚡",
+          icon: "",
           type: "Auto-generated",
           freq: "Weekly",
         },
@@ -13672,21 +13865,21 @@ const MgrReportsView = () => (
         {
           title: "Readiness Forecast",
           desc: "AI-predicted certification readiness scores for all reps with projected pass dates and risk flags.",
-          icon: "🔮",
+          icon: "",
           type: "AI-Predicted",
           freq: "Daily",
         },
         {
           title: "Compliance Training Audit",
           desc: "Compliance module completion status, expiration dates, and regulatory training requirements for audit readiness.",
-          icon: "🛡",
+          icon: "",
           type: "Compliance",
           freq: "Monthly",
         },
         {
           title: "QBR Executive Summary",
           desc: "Automated quarterly business review deck with team performance trends, ROI metrics, and strategic recommendations.",
-          icon: "📈",
+          icon: "",
           type: "Executive",
           freq: "Quarterly",
         },
@@ -16095,7 +16288,6 @@ const LandingPage = ({ onContinue, userName }) => {
                 marginBottom: 10,
               }}
             >
-              <span style={{ fontSize: 13 }}>⚡</span>
               <span
                 style={{
                   fontSize: 11,
@@ -17153,9 +17345,7 @@ const AdmContentView = () => {
                 {c.title}
               </span>
               {c.gamified && (
-                <span style={{ fontSize: 9, color: T.orange, fontWeight: 600 }}>
-                  🎮
-                </span>
+                <Badge color={T.orange} size="xs">Gamified</Badge>
               )}
             </div>
             <div style={{ display: "flex", gap: 5 }}>
@@ -18262,7 +18452,6 @@ const AdmEchoView = () => (
               marginBottom: 10,
             }}
           >
-            <span style={{ fontSize: 13 }}>📥</span>
             <span style={{ fontSize: 12, fontWeight: 600, color: T.blue }}>
               CRM → Proxa Tutor (Inbound)
             </span>
@@ -18347,7 +18536,6 @@ const AdmEchoView = () => (
               marginBottom: 10,
             }}
           >
-            <span style={{ fontSize: 13 }}>📤</span>
             <span style={{ fontSize: 12, fontWeight: 600, color: T.violet }}>
               Proxa Tutor → CRM (Outbound)
             </span>
@@ -18449,17 +18637,17 @@ const AdmEchoView = () => (
             {
               label: "Account Record",
               desc: '"Launch Proxa Tutor" button on HCP account page. Opens Pre-Call Prep for that specific HCP with AI-generated briefing.',
-              icon: "👤",
+              icon: "",
             },
             {
               label: "Activity Feed",
               desc: "Certification status badges visible on rep profile. Managers see readiness scores and gap alerts directly in CRM dashboards.",
-              icon: "📋",
+              icon: "",
             },
             {
               label: "Call Planning",
               desc: 'Before a scheduled HCP visit, CRM surfaces a notification: "AI Prep Brief available for Dr. Patel — open in Proxa Tutor."',
-              icon: "📞",
+              icon: "",
             },
           ].map((p, i) => (
             <div
@@ -18995,7 +19183,7 @@ const AdmSettingsView = () => (
     {[
       {
         title: "Organization",
-        icon: "🏢",
+        icon: "",
         settings: [
           { l: "Organization Name", v: "Acme Biopharma Inc.", type: "text" },
           {
@@ -19010,7 +19198,7 @@ const AdmSettingsView = () => (
       },
       {
         title: "Authentication & Security",
-        icon: "🔒",
+        icon: "",
         settings: [
           {
             l: "SSO Provider",
@@ -19042,7 +19230,7 @@ const AdmSettingsView = () => (
       },
       {
         title: "Integrations",
-        icon: "🔗",
+        icon: "",
         settings: [
           {
             l: "Proxa Echo",
@@ -19084,7 +19272,7 @@ const AdmSettingsView = () => (
       },
       {
         title: "Data & Privacy",
-        icon: "🛡",
+        icon: "",
         settings: [
           { l: "Data Residency", v: "US-East (AWS us-east-1)", type: "text" },
           {
@@ -19120,7 +19308,7 @@ const AdmSettingsView = () => (
       },
       {
         title: "Notifications",
-        icon: "🔔",
+        icon: "",
         settings: [
           { l: "Certification Assignment", v: "Email + In-app", type: "text" },
           {
@@ -20092,7 +20280,7 @@ export default function App() {
         return (
           <>
             {/* Floating Button */}
-            {!aiWidgetOpen && (
+            {!aiWidgetOpen && view !== "tutor" && (
               <div
                 onClick={() => setAiWidgetOpen(true)}
                 style={{
@@ -20118,7 +20306,7 @@ export default function App() {
             )}
 
             {/* Expanded Widget */}
-            {aiWidgetOpen && (
+            {aiWidgetOpen && view !== "tutor" && (
               <div
                 style={{
                   position: "fixed",
