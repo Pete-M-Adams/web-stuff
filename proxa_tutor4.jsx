@@ -3784,68 +3784,138 @@ const TutorView = () => {
 // CERTIFICATIONS VIEW
 // ═══════════════════════════════════════════════
 const CertsView = ({ go }) => {
+  const [selectedCert, setSelectedCert] = useState(null);
   const certs = [
-    {
-      name: "Dupixent® Clinical Data Mastery",
-      ta: "Dermatology",
-      s: "Certified",
-      sc: T.emerald,
-      echo: 92,
-      dt: "Feb 12",
-      att: 1,
-      ttc: "4.2d",
+    { id:"dup", name:"Dupixent® Clinical Data Mastery", ta:"Dermatology", s:"Certified", sc:T.emerald, echo:92, dt:"Feb 12", att:1, ttc:"4.2d",
+      desc:"Comprehensive clinical data certification covering IL-4/IL-13 pathway, LIBERTY AD trial data, safety profile, and competitive positioning vs JAK inhibitors.",
+      competencies:["Clinical Knowledge (94%)","Competitive Positioning (88%)","Objection Handling (90%)"],
+      echoScenario:"15-minute detailing to Dr. Kim (Dermatologist) — presented Dupixent's efficacy + safety vs Rinvoq. Handled JAK safety objection.",
+      echoFeedback:"Strong clinical storytelling. Excellent Acknowledge→Bridge on JAK safety. Minor: Could strengthen payer access messaging.",
+      modules:["Dupixent® MOA Deep Dive","IL-4/IL-13 Pathway","AD Treatment Landscape","Competitive Landscape: Dupixent vs Rinvoq"],
+      timeline:[{d:"Feb 1",e:"Certification assigned"},{d:"Feb 3",e:"Started coursework (4 modules)"},{d:"Feb 7",e:"Completed all modules"},{d:"Feb 9",e:"AI Tutor prep session (2 HCP sims)"},{d:"Feb 12",e:"Echo attempt #1: Passed (92%)"}],
     },
-    {
-      name: "Keytruda® Indication Expansion",
-      ta: "Oncology",
-      s: "Certified",
-      sc: T.emerald,
-      echo: 95,
-      dt: "Dec 5",
-      att: 1,
-      ttc: "3.8d",
+    { id:"key", name:"Keytruda® Indication Expansion", ta:"Oncology", s:"Certified", sc:T.emerald, echo:95, dt:"Dec 5", att:1, ttc:"3.8d",
+      desc:"Advanced certification on Keytruda's expanded indications, including adjuvant and neoadjuvant settings, biomarker testing requirements, and competitive differentiation.",
+      competencies:["Clinical Knowledge (96%)","Biomarker Fluency (93%)","Competitive Positioning (91%)"],
+      echoScenario:"20-minute meeting with Dr. Patel (Oncologist) — discussed PD-L1 testing nuances, presented expanded indications, handled IO combination therapy questions.",
+      echoFeedback:"Exceptional biomarker discussion — one of the strongest sessions scored. Seamlessly connected PD-L1 and TMB testing to treatment selection.",
+      modules:["Keytruda® Expanded Indications","Biomarker Testing Primer","IO Combination Strategies","Oncology Competitive Landscape"],
+      timeline:[{d:"Nov 28",e:"Certification assigned"},{d:"Nov 29",e:"Started coursework"},{d:"Dec 2",e:"Completed modules + AI quiz"},{d:"Dec 4",e:"AI Tutor HCP practice"},{d:"Dec 5",e:"Echo attempt #1: Passed (95%)"}],
     },
-    {
-      name: "Entresto® Cardiology Positioning",
-      ta: "Cardiology",
-      s: "Certified",
-      sc: T.emerald,
-      echo: 88,
-      dt: "Jan 18",
-      att: 2,
-      ttc: "8.1d",
+    { id:"ent", name:"Entresto® Cardiology Positioning", ta:"Cardiology", s:"Certified", sc:T.emerald, echo:88, dt:"Jan 18", att:2, ttc:"8.1d",
+      desc:"Certification on Entresto's role in HFrEF, PARADIGM-HF trial data, transition from ACEi/ARB, and positioning within updated heart failure guidelines.",
+      competencies:["Clinical Knowledge (85%)","Guideline Fluency (82%)","Competitive Positioning (78%)"],
+      echoScenario:"Detailing to Dr. Torres (Cardiologist) — positioned Entresto within GDMT, addressed titration concerns, handled formulary access objection.",
+      echoFeedback:"Good clinical foundation. First attempt: struggled with titration protocol questions (65%). Remediation focused on practical dosing. Second attempt: confident and complete (88%).",
+      modules:["HFrEF Treatment Landscape","PARADIGM-HF Deep Dive","GDMT Positioning","Entresto Titration Protocol"],
+      timeline:[{d:"Jan 4",e:"Certification assigned"},{d:"Jan 6",e:"Started coursework"},{d:"Jan 9",e:"Echo attempt #1: Failed (65%)"},{d:"Jan 10",e:"Remediation pathway started"},{d:"Jan 15",e:"Remediation complete"},{d:"Jan 18",e:"Echo attempt #2: Passed (88%)"}],
     },
-    {
-      name: "SKYRIZI® Objection Handling",
-      ta: "Immunology",
-      s: "In Progress",
-      sc: T.blue,
-      echo: 68,
-      dt: "Mar 1",
-      att: 1,
-      ttc: "—",
+    { id:"sky", name:"SKYRIZI® Objection Handling", ta:"Immunology", s:"In Progress", sc:T.blue, echo:68, dt:"Mar 1", att:1, ttc:"—",
+      desc:"Focused certification on handling competitive objections for SKYRIZI in psoriasis and Crohn's disease, including IL-23 class differentiation and payer access strategies.",
+      competencies:["Objection Handling (68%)","Competitive Positioning (72%)","Payer Strategy (58%)"],
+      echoScenario:"Detailing to Dr. Lee (Gastroenterologist) — presented Crohn's data, faced competitive challenge from Stelara and SKYRIZI's place in treatment sequence.",
+      echoFeedback:"Solid clinical knowledge but payer objection handling needs work. Score 68% — below 75% threshold. Focus area: formulary access conversations.",
+      modules:["IL-23 Mechanism Review","SKYRIZI® Crohn's Data","Payer Objection Workshop","Competitive Positioning: GI Biologics"],
+      timeline:[{d:"Feb 25",e:"Certification assigned"},{d:"Feb 27",e:"Started coursework"},{d:"Mar 1",e:"Echo attempt #1: 68% (below threshold)"},{d:"Mar 2",e:"Continuing coursework + AI Tutor prep"}],
     },
-    {
-      name: "Ozempic® Competitive Intel",
-      ta: "Metabolic",
-      s: "Remediation",
-      sc: T.rose,
-      echo: 54,
-      dt: "Feb 28",
-      att: 2,
-      ttc: "—",
+    { id:"oze", name:"Ozempic® Competitive Intel", ta:"Metabolic", s:"Remediation", sc:T.rose, echo:54, dt:"Feb 28", att:2, ttc:"—",
+      desc:"Core certification on Ozempic's competitive positioning vs tirzepatide (Mounjaro), SELECT trial evidence, and the Acknowledge→Bridge→Seed framework for competitive conversations.",
+      competencies:["MOA Differentiation (38%)","Payer Objections (45%)","RWE Fluency (62%)"],
+      echoScenario:"Detailing to Dr. Patel (Endocrinologist) — challenged on tirzepatide A1C superiority, struggled to bridge to CV evidence, lost control of the conversation.",
+      echoFeedback:"Critical gaps in competitive positioning. Cannot yet articulate semaglutide vs tirzepatide differentiation under pressure. Remediation pathway active with 9 targeted steps.",
+      modules:["GLP-1 MOA Deep Dive","SELECT Trial Outcomes","Competitive Landscape: Mounjaro vs Ozempic","Payer Objection Handling"],
+      timeline:[{d:"Feb 15",e:"Certification assigned"},{d:"Feb 18",e:"Echo attempt #1: 48%"},{d:"Feb 19",e:"Remediation pathway started"},{d:"Feb 28",e:"Echo attempt #2: 54% (improved but below threshold)"},{d:"Mar 1",e:"Extended remediation — currently step 3/9"}],
     },
-    {
-      name: "Reyvow® Product Launch",
-      ta: "Neuroscience",
-      s: "Assigned",
-      sc: T.amber,
-      echo: null,
-      dt: "—",
-      att: 0,
-      ttc: "—",
+    { id:"rey", name:"Reyvow® Product Launch", ta:"Neuroscience", s:"Assigned", sc:T.amber, echo:null, dt:"—", att:0, ttc:"—",
+      desc:"Upcoming product launch certification for Reyvow (lasmiditan) in acute migraine treatment. Covers mechanism, SAMURAI/SPARTAN trial data, and launch positioning strategy.",
+      competencies:[],
+      echoScenario:null,
+      echoFeedback:null,
+      modules:["Reyvow® MOA & Pharmacology","SAMURAI/SPARTAN Trials","Migraine Treatment Landscape","Launch Positioning Playbook"],
+      timeline:[{d:"Mar 10",e:"Certification assigned — due Mar 30"}],
     },
   ];
+
+  const sel = certs.find(c => c.id === selectedCert);
+
+  // ── Cert Detail View ──
+  if (sel) return (
+    <div style={{display:"flex",flexDirection:"column",gap:18,animation:"fadeUp .3s ease"}}>
+      <div style={{display:"flex",alignItems:"center",gap:14}}>
+        <button onClick={() => setSelectedCert(null)} style={{width:36,height:36,borderRadius:10,border:`1px solid ${T.border}`,background:T.card,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",color:T.textMuted,fontSize:16}}>←</button>
+        <div style={{flex:1}}>
+          <div style={{fontSize:17,fontWeight:700,color:T.text,fontFamily:"'Outfit',sans-serif"}}>{sel.name}</div>
+          <div style={{display:"flex",gap:6,marginTop:4}}>
+            <Badge color={sel.sc} size="sm">{sel.s}</Badge>
+            <Badge color={T.violet} size="sm">{sel.ta}</Badge>
+            {sel.echo && <span style={{fontSize:12,fontWeight:700,color:sel.echo>=75?T.emerald:sel.echo>=60?T.amber:T.rose}}>Echo: {sel.echo}%</span>}
+          </div>
+        </div>
+        {sel.echo && <Ring value={sel.echo} size={56} stroke={4.5} color={sel.echo>=75?T.emerald:sel.echo>=60?T.amber:T.rose}><span style={{fontSize:16,fontWeight:800,color:sel.echo>=75?T.emerald:sel.echo>=60?T.amber:T.rose,fontFamily:"'Outfit',sans-serif"}}>{sel.echo}</span></Ring>}
+      </div>
+
+      <p style={{fontSize:13,color:T.textSoft,lineHeight:1.65,margin:0}}>{sel.desc}</p>
+
+      <div style={{display:"grid",gridTemplateColumns:sel.echoScenario?"1fr 1fr":"1fr",gap:14}}>
+        {sel.echoScenario && (
+          <div style={{background:T.card,borderRadius:13,padding:"16px 18px",border:`1px solid ${T.border}`}}>
+            <div style={{fontSize:10,fontWeight:600,color:T.rose,textTransform:"uppercase",letterSpacing:.8,marginBottom:8}}>Echo Roleplay Scenario</div>
+            <p style={{fontSize:12,color:T.textSoft,lineHeight:1.6,margin:"0 0 10px"}}>{sel.echoScenario}</p>
+            <div style={{fontSize:10,fontWeight:600,color:T.blue,textTransform:"uppercase",letterSpacing:.8,marginBottom:6}}>AI Feedback</div>
+            <p style={{fontSize:12,color:T.textSoft,lineHeight:1.6,margin:0}}>{sel.echoFeedback}</p>
+          </div>
+        )}
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          {sel.competencies.length > 0 && (
+            <div style={{background:T.card,borderRadius:13,padding:"16px 18px",border:`1px solid ${T.border}`}}>
+              <div style={{fontSize:10,fontWeight:600,color:T.emerald,textTransform:"uppercase",letterSpacing:.8,marginBottom:8}}>Competency Scores at Certification</div>
+              {sel.competencies.map((c, i) => {
+                const match = c.match(/\((\d+)%\)/);
+                const val = match ? parseInt(match[1]) : 0;
+                return (
+                  <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                    <span style={{fontSize:11.5,color:T.text,flex:1}}>{c.replace(/\s*\(\d+%\)/,"")}</span>
+                    <Bar value={val} color={val>=80?T.emerald:val>=60?T.amber:T.rose} h={5}/>
+                    <span style={{fontSize:11,fontWeight:600,color:val>=80?T.emerald:val>=60?T.amber:T.rose,minWidth:28}}>{val}%</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <div style={{background:T.card,borderRadius:13,padding:"16px 18px",border:`1px solid ${T.border}`}}>
+            <div style={{fontSize:10,fontWeight:600,color:T.blue,textTransform:"uppercase",letterSpacing:.8,marginBottom:8}}>Required Modules</div>
+            {sel.modules.map((m, i) => (
+              <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:5}}>
+                <span style={{color:sel.s==="Assigned"?T.textFaint:T.emerald,fontSize:10}}>{sel.s==="Assigned"?"○":"✓"}</span>
+                <span style={{fontSize:12,color:T.textSoft}}>{m}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{background:T.card,borderRadius:13,padding:"16px 18px",border:`1px solid ${T.border}`}}>
+        <div style={{fontSize:10,fontWeight:600,color:T.violet,textTransform:"uppercase",letterSpacing:.8,marginBottom:10}}>Certification Timeline</div>
+        {sel.timeline.map((t, i) => (
+          <div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:i<sel.timeline.length-1?8:0}}>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",flexShrink:0}}>
+              <div style={{width:10,height:10,borderRadius:"50%",background:i===sel.timeline.length-1?sel.sc:T.borderLight,border:`2px solid ${i===sel.timeline.length-1?sel.sc:T.borderLight}`}}/>
+              {i < sel.timeline.length-1 && <div style={{width:1.5,height:20,background:T.border}}/>}
+            </div>
+            <div style={{display:"flex",gap:10,alignItems:"baseline"}}>
+              <span style={{fontSize:10.5,color:T.textMuted,fontFamily:"'JetBrains Mono',monospace",minWidth:46}}>{t.d}</span>
+              <span style={{fontSize:12,color:T.textSoft}}>{t.e}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {sel.s === "Remediation" && (
+        <button onClick={() => { setSelectedCert(null); go("pathway"); }} style={{padding:"12px 24px",borderRadius:10,border:"none",background:T.blue,color:T.white,fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:"'Outfit',sans-serif",boxShadow:`0 4px 14px ${T.blue}25`,alignSelf:"flex-start"}}>View Remediation Pathway →</button>
+      )}
+    </div>
+  );
+
   return (
     <div
       style={{
@@ -3958,7 +4028,7 @@ const CertsView = ({ go }) => {
           <div
             key={i}
             className="hbright"
-            onClick={() => c.s === "Remediation" && go("pathway")}
+            onClick={() => setSelectedCert(c.id)}
             style={{
               background: T.card,
               borderRadius: 11,
@@ -3969,7 +4039,7 @@ const CertsView = ({ go }) => {
               gridTemplateColumns: "2.5fr 1fr .9fr .7fr .5fr .6fr",
               alignItems: "center",
               gap: 10,
-              cursor: c.s === "Remediation" ? "pointer" : "default",
+              cursor: "pointer",
               animation: `fadeUp .3s ease ${i * 0.04}s both`,
             }}
           >
