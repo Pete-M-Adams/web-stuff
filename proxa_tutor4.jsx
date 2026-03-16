@@ -5298,7 +5298,7 @@ const CompetenciesView = () => {
           {/* Results Header */}
           <div
             style={{
-              background: `linear-gradient(135deg,${T.card} 0%,${quizScore >= 80 ? "#0F1A14" : quizScore >= 60 ? "#1A1710" : "#1A1012"} 100%)`,
+              background: T.card,
               borderRadius: 18,
               padding: "28px 28px",
               border: `1px solid ${quizScore >= 80 ? T.emerald : quizScore >= 60 ? T.amber : T.rose}15`,
