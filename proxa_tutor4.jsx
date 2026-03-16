@@ -8089,7 +8089,7 @@ const LibraryView = () => {
         {isGamified && (
           <div
             style={{
-              background: `linear-gradient(135deg, ${T.card} 0%, #1A1510 100%)`,
+              background: T.card,
               borderRadius: 12,
               padding: "12px 18px",
               border: `1px solid ${T.orange}18`,
