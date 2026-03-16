@@ -1036,7 +1036,9 @@ const HomeView = ({ go }) => {
             animation: "pulseGlow 3s ease infinite",
             color: T.white,
           }}
-        ></div>
+        >
+          <span style={{ fontSize: 24, color: T.white }}>⚡</span>
+        </div>
         <div style={{ flex: 1 }}>
           <div
             style={{
@@ -1176,9 +1178,18 @@ const PathwayView = ({ go }) => {
       q: "What is the primary mechanism by which Ozempic (semaglutide) lowers blood glucose?",
       opts: [
         { id: "A", text: "Inhibits SGLT2 to block renal glucose reabsorption" },
-        { id: "B", text: "Selectively activates GLP-1 receptors to stimulate glucose-dependent insulin secretion" },
-        { id: "C", text: "Activates both GLP-1 and GIP receptors simultaneously" },
-        { id: "D", text: "Inhibits DPP-4 to increase endogenous incretin levels" },
+        {
+          id: "B",
+          text: "Selectively activates GLP-1 receptors to stimulate glucose-dependent insulin secretion",
+        },
+        {
+          id: "C",
+          text: "Activates both GLP-1 and GIP receptors simultaneously",
+        },
+        {
+          id: "D",
+          text: "Inhibits DPP-4 to increase endogenous incretin levels",
+        },
       ],
       correct: "B",
       expl: "Semaglutide is a **selective GLP-1 receptor agonist**. It mimics the GLP-1 incretin hormone, stimulating insulin secretion only when glucose is elevated, suppressing glucagon, slowing gastric emptying, and reducing appetite. It does not activate GIP receptors — that distinguishes tirzepatide (Mounjaro).",
@@ -1186,10 +1197,22 @@ const PathwayView = ({ go }) => {
     {
       q: "How does tirzepatide (Mounjaro) differ mechanistically from semaglutide (Ozempic)?",
       opts: [
-        { id: "A", text: "Tirzepatide inhibits DPP-4 while semaglutide is a direct GLP-1 agonist" },
-        { id: "B", text: "Both are GLP-1 RAs but tirzepatide has a significantly longer half-life" },
-        { id: "C", text: "Tirzepatide is a dual GIP + GLP-1 receptor agonist; semaglutide targets GLP-1 only" },
-        { id: "D", text: "Tirzepatide selectively targets GIP receptors while semaglutide targets GLP-1" },
+        {
+          id: "A",
+          text: "Tirzepatide inhibits DPP-4 while semaglutide is a direct GLP-1 agonist",
+        },
+        {
+          id: "B",
+          text: "Both are GLP-1 RAs but tirzepatide has a significantly longer half-life",
+        },
+        {
+          id: "C",
+          text: "Tirzepatide is a dual GIP + GLP-1 receptor agonist; semaglutide targets GLP-1 only",
+        },
+        {
+          id: "D",
+          text: "Tirzepatide selectively targets GIP receptors while semaglutide targets GLP-1",
+        },
       ],
       correct: "C",
       expl: "Tirzepatide activates **both GIP and GLP-1 receptors simultaneously**, while semaglutide is a **single-target GLP-1 RA**. This dual incretin co-agonism is the core mechanistic differentiator — not half-life or class. Memorize this as the foundation of every competitive MOA conversation.",
@@ -1197,10 +1220,22 @@ const PathwayView = ({ go }) => {
     {
       q: "GLP-1 and GIP are both incretin hormones released in response to meals. Which statement correctly describes their anatomical origin?",
       opts: [
-        { id: "A", text: "GLP-1 is secreted by K-cells in the proximal gut; GIP by L-cells in the distal gut" },
-        { id: "B", text: "GLP-1 is secreted by L-cells in the distal gut; GIP by K-cells in the proximal gut" },
-        { id: "C", text: "GIP suppresses glucagon while GLP-1 stimulates it — both from pancreatic alpha cells" },
-        { id: "D", text: "Both are secreted from identical cell types concentrated in the ileum" },
+        {
+          id: "A",
+          text: "GLP-1 is secreted by K-cells in the proximal gut; GIP by L-cells in the distal gut",
+        },
+        {
+          id: "B",
+          text: "GLP-1 is secreted by L-cells in the distal gut; GIP by K-cells in the proximal gut",
+        },
+        {
+          id: "C",
+          text: "GIP suppresses glucagon while GLP-1 stimulates it — both from pancreatic alpha cells",
+        },
+        {
+          id: "D",
+          text: "Both are secreted from identical cell types concentrated in the ileum",
+        },
       ],
       correct: "B",
       expl: "**GLP-1** is secreted by **L-cells** in the distal intestine (ileum/colon), while **GIP** is secreted by **K-cells** in the proximal gut (duodenum/jejunum). Understanding this anatomical difference helps explain why tirzepatide's dual agonism is mechanistically synergistic — it activates two complementary incretin pathways from different gut segments.",
@@ -1208,10 +1243,22 @@ const PathwayView = ({ go }) => {
     {
       q: "The SELECT trial is a key differentiator for Ozempic. Which patient population was enrolled?",
       opts: [
-        { id: "A", text: "Newly diagnosed type 2 diabetes patients without cardiovascular history" },
-        { id: "B", text: "Adolescent patients with obesity and metabolic syndrome" },
-        { id: "C", text: "Patients with overweight or obesity and established cardiovascular disease, but without diabetes" },
-        { id: "D", text: "Patients with type 1 diabetes on background insulin therapy" },
+        {
+          id: "A",
+          text: "Newly diagnosed type 2 diabetes patients without cardiovascular history",
+        },
+        {
+          id: "B",
+          text: "Adolescent patients with obesity and metabolic syndrome",
+        },
+        {
+          id: "C",
+          text: "Patients with overweight or obesity and established cardiovascular disease, but without diabetes",
+        },
+        {
+          id: "D",
+          text: "Patients with type 1 diabetes on background insulin therapy",
+        },
       ],
       correct: "C",
       expl: "SELECT enrolled patients with **established cardiovascular disease but without diabetes**, demonstrating a **20% reduction in MACE**. This is Ozempic's most powerful differentiator for cardiologists — it's the only GLP-1 RA with robust CV outcomes data in a non-diabetic obese population.",
@@ -1219,10 +1266,22 @@ const PathwayView = ({ go }) => {
     {
       q: "Compared to semaglutide, tirzepatide's dual mechanism produces approximately what difference in A1C reduction in clinical trials?",
       opts: [
-        { id: "A", text: "Both agents produce equivalent A1C reduction of approximately 1.5%" },
-        { id: "B", text: "Semaglutide reduces A1C approximately 0.6% more than tirzepatide" },
-        { id: "C", text: "Tirzepatide reduces A1C ~2.4% vs semaglutide's ~1.8%" },
-        { id: "D", text: "Tirzepatide shows no significant difference vs semaglutide in head-to-head trials" },
+        {
+          id: "A",
+          text: "Both agents produce equivalent A1C reduction of approximately 1.5%",
+        },
+        {
+          id: "B",
+          text: "Semaglutide reduces A1C approximately 0.6% more than tirzepatide",
+        },
+        {
+          id: "C",
+          text: "Tirzepatide reduces A1C ~2.4% vs semaglutide's ~1.8%",
+        },
+        {
+          id: "D",
+          text: "Tirzepatide shows no significant difference vs semaglutide in head-to-head trials",
+        },
       ],
       correct: "C",
       expl: "**Tirzepatide** achieves approximately **~2.4% A1C reduction** vs semaglutide's **~1.8%** — driven by its dual GIP+GLP-1 mechanism. Acknowledge this data confidently, then pivot to Ozempic's **CV outcomes evidence** (SELECT, SUSTAIN 6), which tirzepatide has not yet matched.",
@@ -1232,7 +1291,10 @@ const PathwayView = ({ go }) => {
       opts: [
         { id: "A", text: "SUSTAIN 1 — semaglutide monotherapy vs placebo" },
         { id: "B", text: "SUSTAIN 6 — CV outcomes in high-risk T2D patients" },
-        { id: "C", text: "SUSTAIN 7 — head-to-head semaglutide vs dulaglutide" },
+        {
+          id: "C",
+          text: "SUSTAIN 7 — head-to-head semaglutide vs dulaglutide",
+        },
         { id: "D", text: "SUSTAIN 10 — semaglutide vs empagliflozin" },
       ],
       correct: "C",
@@ -1241,10 +1303,22 @@ const PathwayView = ({ go }) => {
     {
       q: "When an HCP objects that Ozempic's CV data 'doesn't apply' to their low-risk T2D patients, which response framework is most effective?",
       opts: [
-        { id: "A", text: "Immediately pivot to SUSTAIN 7 A1C data without addressing the objection" },
-        { id: "B", text: "Agree with the HCP and shift the conversation entirely to weight loss benefits" },
-        { id: "C", text: "Acknowledge the point, bridge to SUSTAIN population-level efficacy data, then note how CV risk evolves over time" },
-        { id: "D", text: "Counter-argue that all type 2 diabetes patients have inherent CV risk" },
+        {
+          id: "A",
+          text: "Immediately pivot to SUSTAIN 7 A1C data without addressing the objection",
+        },
+        {
+          id: "B",
+          text: "Agree with the HCP and shift the conversation entirely to weight loss benefits",
+        },
+        {
+          id: "C",
+          text: "Acknowledge the point, bridge to SUSTAIN population-level efficacy data, then note how CV risk evolves over time",
+        },
+        {
+          id: "D",
+          text: "Counter-argue that all type 2 diabetes patients have inherent CV risk",
+        },
       ],
       correct: "C",
       expl: "The **Acknowledge → Bridge → Seed** framework: (1) **Validate** — 'Fair point — SELECT was specifically for patients with established CV disease.' (2) **Bridge** — 'For your lower-risk patients, the SUSTAIN program showed ~1.8% A1C reduction and ~4.5kg weight loss.' (3) **Seed** — 'As their risk profile evolves, they'll already be on a therapy with the most robust long-term CV evidence.' Your Echo feedback flagged skipping step 1.",
@@ -1252,10 +1326,22 @@ const PathwayView = ({ go }) => {
     {
       q: "GIP receptor activation in tirzepatide contributes to its metabolic effects primarily through which mechanism?",
       opts: [
-        { id: "A", text: "Blocking renal glucose reabsorption via SGLT2 pathway modulation" },
-        { id: "B", text: "Direct suppression of hepatic glucose production independent of insulin" },
-        { id: "C", text: "Complementary insulin secretion and adipocyte signaling that amplifies weight loss" },
-        { id: "D", text: "Inhibiting alpha-cell glucagon secretion more potently than GLP-1 agonism alone" },
+        {
+          id: "A",
+          text: "Blocking renal glucose reabsorption via SGLT2 pathway modulation",
+        },
+        {
+          id: "B",
+          text: "Direct suppression of hepatic glucose production independent of insulin",
+        },
+        {
+          id: "C",
+          text: "Complementary insulin secretion and adipocyte signaling that amplifies weight loss",
+        },
+        {
+          id: "D",
+          text: "Inhibiting alpha-cell glucagon secretion more potently than GLP-1 agonism alone",
+        },
       ],
       correct: "C",
       expl: "GIP receptor co-agonism contributes **complementary insulin secretion** and activates adipocyte GIP receptors, which may enhance lipid metabolism and amplify weight loss beyond GLP-1 agonism alone. This mechanistic synergy helps explain why tirzepatide produces numerically greater weight loss than semaglutide at comparable doses.",
@@ -1263,10 +1349,22 @@ const PathwayView = ({ go }) => {
     {
       q: "A cardiologist asks: 'Why should I use Ozempic over Mounjaro for a patient with T2D and a recent MI?' Your strongest response highlights:",
       opts: [
-        { id: "A", text: "Ozempic's longer market history and greater physician familiarity overall" },
-        { id: "B", text: "The 20% MACE reduction established across SUSTAIN 6 and SELECT — the most robust CV outcomes data in the GLP-1 class" },
-        { id: "C", text: "Ozempic's lower injection volume and more flexible dosing schedule" },
-        { id: "D", text: "The fact that tirzepatide has not yet received a dedicated CV risk reduction indication" },
+        {
+          id: "A",
+          text: "Ozempic's longer market history and greater physician familiarity overall",
+        },
+        {
+          id: "B",
+          text: "The 20% MACE reduction established across SUSTAIN 6 and SELECT — the most robust CV outcomes data in the GLP-1 class",
+        },
+        {
+          id: "C",
+          text: "Ozempic's lower injection volume and more flexible dosing schedule",
+        },
+        {
+          id: "D",
+          text: "The fact that tirzepatide has not yet received a dedicated CV risk reduction indication",
+        },
       ],
       correct: "B",
       expl: "For a **post-MI patient**, anchor on CV outcomes data: **SUSTAIN 6** showed significant MACE reduction in high-risk T2D, and **SELECT** confirmed this in a broader CV population. Option A is weak positioning; C is not unique to Ozempic; D is technically accurate but not the most compelling argument — always lead with your evidence.",
@@ -1274,10 +1372,22 @@ const PathwayView = ({ go }) => {
     {
       q: "Which statement BEST positions Ozempic against Mounjaro in a conversation with an evidence-focused endocrinologist?",
       opts: [
-        { id: "A", text: "'Ozempic and Mounjaro work essentially the same way — the choice comes down to patient preference.'" },
-        { id: "B", text: "'Mounjaro's dual mechanism may show stronger glycemic control, but Ozempic's CV outcomes evidence — including a 20% MACE reduction in SELECT — is unmatched for your higher-risk patients.'" },
-        { id: "C", text: "'Ozempic has demonstrated better glycemic control than Mounjaro across all patient populations.'" },
-        { id: "D", text: "'Mounjaro is essentially an updated version of Ozempic with an additional receptor target.'" },
+        {
+          id: "A",
+          text: "'Ozempic and Mounjaro work essentially the same way — the choice comes down to patient preference.'",
+        },
+        {
+          id: "B",
+          text: "'Mounjaro's dual mechanism may show stronger glycemic control, but Ozempic's CV outcomes evidence — including a 20% MACE reduction in SELECT — is unmatched for your higher-risk patients.'",
+        },
+        {
+          id: "C",
+          text: "'Ozempic has demonstrated better glycemic control than Mounjaro across all patient populations.'",
+        },
+        {
+          id: "D",
+          text: "'Mounjaro is essentially an updated version of Ozempic with an additional receptor target.'",
+        },
       ],
       correct: "B",
       expl: "**Effective competitive positioning** acknowledges the competitor's strength (tirzepatide's superior glycemic profile) rather than dismissing it, then pivots to your product's genuine differentiator (CV outcomes evidence). Option B demonstrates clinical credibility through intellectual honesty while clearly articulating Ozempic's unique value for higher-risk patients.",
@@ -1477,7 +1587,9 @@ const PathwayView = ({ go }) => {
     return s.status;
   };
 
-  const completedCount = steps.filter((s) => effectiveStatus(s) === "complete").length;
+  const completedCount = steps.filter(
+    (s) => effectiveStatus(s) === "complete",
+  ).length;
   const pct = Math.round((completedCount / steps.length) * 100);
 
   return (
@@ -1949,45 +2061,198 @@ const PathwayView = ({ go }) => {
                       >
                         {s.id === 3 && quizActive && !quizDone ? (
                           <div>
-                            <div style={{ padding: "10px 16px", background: `${T.teal}0A`, borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                              <span style={{ fontSize: 11, fontWeight: 600, color: T.teal, letterSpacing: 0.3 }}>Knowledge Check — MOA Differentiation</span>
-                              <span style={{ fontSize: 11, color: T.textMuted }}>Question {quizQIdx + 1} / {moaQuiz.length}</span>
+                            <div
+                              style={{
+                                padding: "10px 16px",
+                                background: `${T.teal}0A`,
+                                borderBottom: `1px solid ${T.border}`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  fontSize: 11,
+                                  fontWeight: 600,
+                                  color: T.teal,
+                                  letterSpacing: 0.3,
+                                }}
+                              >
+                                Knowledge Check — MOA Differentiation
+                              </span>
+                              <span
+                                style={{ fontSize: 11, color: T.textMuted }}
+                              >
+                                Question {quizQIdx + 1} / {moaQuiz.length}
+                              </span>
                             </div>
                             <div style={{ padding: "14px 16px" }}>
-                              <p style={{ fontSize: 12.5, color: T.text, lineHeight: 1.6, margin: "0 0 12px", fontStyle: "italic" }}>{moaQuiz[quizQIdx].q}</p>
-                              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                              <p
+                                style={{
+                                  fontSize: 12.5,
+                                  color: T.text,
+                                  lineHeight: 1.6,
+                                  margin: "0 0 12px",
+                                  fontStyle: "italic",
+                                }}
+                              >
+                                {moaQuiz[quizQIdx].q}
+                              </p>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  gap: 5,
+                                }}
+                              >
                                 {moaQuiz[quizQIdx].opts.map((o) => {
                                   const sel = quizSelected === o.id;
-                                  const correct = o.id === moaQuiz[quizQIdx].correct;
+                                  const correct =
+                                    o.id === moaQuiz[quizQIdx].correct;
                                   const show = quizShowResult;
-                                  let bc = T.border, bg = T.card;
-                                  if (show && correct) { bc = T.emerald; bg = T.emeraldDim; }
-                                  else if (show && sel && !correct) { bc = T.rose; bg = T.roseDim; }
-                                  else if (sel && !show) { bc = T.teal; bg = `${T.teal}12`; }
+                                  let bc = T.border,
+                                    bg = T.card;
+                                  if (show && correct) {
+                                    bc = T.emerald;
+                                    bg = T.emeraldDim;
+                                  } else if (show && sel && !correct) {
+                                    bc = T.rose;
+                                    bg = T.roseDim;
+                                  } else if (sel && !show) {
+                                    bc = T.teal;
+                                    bg = `${T.teal}12`;
+                                  }
                                   return (
-                                    <button key={o.id} onClick={() => handleQuizSelect(o.id)} disabled={quizShowResult}
-                                      style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "10px 12px", borderRadius: 9, border: `1.5px solid ${bc}`, background: bg, cursor: quizShowResult ? "default" : "pointer", transition: "all .15s", textAlign: "left", width: "100%", fontFamily: "'Outfit',sans-serif" }}
+                                    <button
+                                      key={o.id}
+                                      onClick={() => handleQuizSelect(o.id)}
+                                      disabled={quizShowResult}
+                                      style={{
+                                        display: "flex",
+                                        gap: 8,
+                                        alignItems: "flex-start",
+                                        padding: "10px 12px",
+                                        borderRadius: 9,
+                                        border: `1.5px solid ${bc}`,
+                                        background: bg,
+                                        cursor: quizShowResult
+                                          ? "default"
+                                          : "pointer",
+                                        transition: "all .15s",
+                                        textAlign: "left",
+                                        width: "100%",
+                                        fontFamily: "'Outfit',sans-serif",
+                                      }}
                                     >
-                                      <span style={{ width: 20, height: 20, borderRadius: 5, flexShrink: 0, background: show && correct ? T.emerald : show && sel ? T.rose : sel ? T.teal : T.surface, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: sel || (show && correct) ? T.white : T.textMuted }}>
+                                      <span
+                                        style={{
+                                          width: 20,
+                                          height: 20,
+                                          borderRadius: 5,
+                                          flexShrink: 0,
+                                          background:
+                                            show && correct
+                                              ? T.emerald
+                                              : show && sel
+                                                ? T.rose
+                                                : sel
+                                                  ? T.teal
+                                                  : T.surface,
+                                          display: "flex",
+                                          alignItems: "center",
+                                          justifyContent: "center",
+                                          fontSize: 10,
+                                          fontWeight: 700,
+                                          color:
+                                            sel || (show && correct)
+                                              ? T.white
+                                              : T.textMuted,
+                                        }}
+                                      >
                                         {o.id}
                                       </span>
-                                      <span style={{ fontSize: 12, color: T.text, lineHeight: 1.45 }}>{o.text}</span>
+                                      <span
+                                        style={{
+                                          fontSize: 12,
+                                          color: T.text,
+                                          lineHeight: 1.45,
+                                        }}
+                                      >
+                                        {o.text}
+                                      </span>
                                     </button>
                                   );
                                 })}
                               </div>
                               {quizShowResult && (
                                 <div>
-                                  <div style={{ marginTop: 12, padding: "12px 14px", background: quizSelected === moaQuiz[quizQIdx].correct ? T.emeraldDim : T.roseDim, borderRadius: 9, animation: "fadeUp .3s ease", borderLeft: `3px solid ${quizSelected === moaQuiz[quizQIdx].correct ? T.emerald : T.rose}` }}>
-                                    <div style={{ fontSize: 11.5, fontWeight: 700, color: quizSelected === moaQuiz[quizQIdx].correct ? T.emerald : T.rose, marginBottom: 5 }}>
-                                      {quizSelected === moaQuiz[quizQIdx].correct ? "Correct!" : "Not quite."}
+                                  <div
+                                    style={{
+                                      marginTop: 12,
+                                      padding: "12px 14px",
+                                      background:
+                                        quizSelected ===
+                                        moaQuiz[quizQIdx].correct
+                                          ? T.emeraldDim
+                                          : T.roseDim,
+                                      borderRadius: 9,
+                                      animation: "fadeUp .3s ease",
+                                      borderLeft: `3px solid ${quizSelected === moaQuiz[quizQIdx].correct ? T.emerald : T.rose}`,
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        fontSize: 11.5,
+                                        fontWeight: 700,
+                                        color:
+                                          quizSelected ===
+                                          moaQuiz[quizQIdx].correct
+                                            ? T.emerald
+                                            : T.rose,
+                                        marginBottom: 5,
+                                      }}
+                                    >
+                                      {quizSelected ===
+                                      moaQuiz[quizQIdx].correct
+                                        ? "Correct!"
+                                        : "Not quite."}
                                     </div>
-                                    <div style={{ fontSize: 11.5, color: T.textSoft, lineHeight: 1.6 }}
-                                      dangerouslySetInnerHTML={{ __html: moaQuiz[quizQIdx].expl.replace(/\*\*(.*?)\*\*/g, `<strong style="color:${T.text}">$1</strong>`).replace(/\n/g, "<br/>") }}
+                                    <div
+                                      style={{
+                                        fontSize: 11.5,
+                                        color: T.textSoft,
+                                        lineHeight: 1.6,
+                                      }}
+                                      dangerouslySetInnerHTML={{
+                                        __html: moaQuiz[quizQIdx].expl
+                                          .replace(
+                                            /\*\*(.*?)\*\*/g,
+                                            `<strong style="color:${T.text}">$1</strong>`,
+                                          )
+                                          .replace(/\n/g, "<br/>"),
+                                      }}
                                     />
                                   </div>
-                                  <button onClick={handleQuizNext} style={{ marginTop: 10, width: "100%", padding: "10px", borderRadius: 9, border: "none", background: T.teal, color: T.white, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
-                                    {quizQIdx === moaQuiz.length - 1 ? "Finish Quiz" : "Next Question →"}
+                                  <button
+                                    onClick={handleQuizNext}
+                                    style={{
+                                      marginTop: 10,
+                                      width: "100%",
+                                      padding: "10px",
+                                      borderRadius: 9,
+                                      border: "none",
+                                      background: T.teal,
+                                      color: T.white,
+                                      fontSize: 12,
+                                      fontWeight: 600,
+                                      cursor: "pointer",
+                                      fontFamily: "'Outfit',sans-serif",
+                                    }}
+                                  >
+                                    {quizQIdx === moaQuiz.length - 1
+                                      ? "Finish Quiz"
+                                      : "Next Question →"}
                                   </button>
                                 </div>
                               )}
@@ -1995,36 +2260,149 @@ const PathwayView = ({ go }) => {
                           </div>
                         ) : s.id === 3 && quizDone ? (
                           <div style={{ padding: "20px 16px" }}>
-                            <div style={{ textAlign: "center", marginBottom: 14 }}>
-                              <div style={{ fontSize: 32, fontWeight: 800, color: quizScore > 60 ? (quizScore >= 80 ? T.emerald : T.amber) : T.rose, fontFamily: "'Outfit',sans-serif" }}>{quizScore}%</div>
-                              <div style={{ fontSize: 12, color: T.textSoft, marginTop: 4 }}>
-                                {quizScore > 60 ? (quizScore >= 80 ? "Excellent — pathway step complete! Payer Objection Handling Workshop is now unlocked." : "Good effort — pathway step complete! Payer Objection Handling Workshop is now unlocked.") : "Score below 61% — review the MOA concepts and retake to continue your pathway."}
+                            <div
+                              style={{ textAlign: "center", marginBottom: 14 }}
+                            >
+                              <div
+                                style={{
+                                  fontSize: 32,
+                                  fontWeight: 800,
+                                  color:
+                                    quizScore > 60
+                                      ? quizScore >= 80
+                                        ? T.emerald
+                                        : T.amber
+                                      : T.rose,
+                                  fontFamily: "'Outfit',sans-serif",
+                                }}
+                              >
+                                {quizScore}%
+                              </div>
+                              <div
+                                style={{
+                                  fontSize: 12,
+                                  color: T.textSoft,
+                                  marginTop: 4,
+                                }}
+                              >
+                                {quizScore > 60
+                                  ? quizScore >= 80
+                                    ? "Excellent — pathway step complete! Payer Objection Handling Workshop is now unlocked."
+                                    : "Good effort — pathway step complete! Payer Objection Handling Workshop is now unlocked."
+                                  : "Score below 61% — review the MOA concepts and retake to continue your pathway."}
                               </div>
                             </div>
                             {quizScore > 60 ? (
-                              <div style={{ padding: "10px 14px", background: T.emeraldDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8 }}>
-                                <span style={{ color: T.emerald, fontWeight: 700, fontSize: 12 }}>Completed</span>
-                                <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {quizScore}%</span>
+                              <div
+                                style={{
+                                  padding: "10px 14px",
+                                  background: T.emeraldDim,
+                                  borderRadius: 8,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    color: T.emerald,
+                                    fontWeight: 700,
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  Completed
+                                </span>
+                                <span
+                                  style={{ color: T.textMuted, fontSize: 11 }}
+                                >
+                                  Score: {quizScore}%
+                                </span>
                               </div>
                             ) : (
                               <div>
-                                <div style={{ padding: "10px 14px", background: T.roseDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8, marginBottom: 10, borderLeft: `3px solid ${T.rose}` }}>
-                                  <span style={{ color: T.rose, fontWeight: 700, fontSize: 12 }}>Not passed</span>
-                                  <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {quizScore}% · Minimum required: 61%</span>
+                                <div
+                                  style={{
+                                    padding: "10px 14px",
+                                    background: T.roseDim,
+                                    borderRadius: 8,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8,
+                                    marginBottom: 10,
+                                    borderLeft: `3px solid ${T.rose}`,
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      color: T.rose,
+                                      fontWeight: 700,
+                                      fontSize: 12,
+                                    }}
+                                  >
+                                    Not passed
+                                  </span>
+                                  <span
+                                    style={{ color: T.textMuted, fontSize: 11 }}
+                                  >
+                                    Score: {quizScore}% · Minimum required: 61%
+                                  </span>
                                 </div>
-                                <button onClick={handleQuizRetry} style={{ width: "100%", padding: "10px", borderRadius: 9, border: `1.5px solid ${T.teal}`, background: "transparent", color: T.teal, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+                                <button
+                                  onClick={handleQuizRetry}
+                                  style={{
+                                    width: "100%",
+                                    padding: "10px",
+                                    borderRadius: 9,
+                                    border: `1.5px solid ${T.teal}`,
+                                    background: "transparent",
+                                    color: T.teal,
+                                    fontSize: 12,
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                    fontFamily: "'Outfit',sans-serif",
+                                  }}
+                                >
                                   Retake Quiz
                                 </button>
                               </div>
                             )}
                           </div>
                         ) : (
-                          <div style={{ padding: "14px 16px", fontSize: 12.5, color: T.textSoft, lineHeight: 1.6 }}>
+                          <div
+                            style={{
+                              padding: "14px 16px",
+                              fontSize: 12.5,
+                              color: T.textSoft,
+                              lineHeight: 1.6,
+                            }}
+                          >
                             {s.detail}
                             {done && (
-                              <div style={{ marginTop: 10, padding: "10px 14px", background: T.emeraldDim, borderRadius: 8, display: "flex", alignItems: "center", gap: 8 }}>
-                                <span style={{ color: T.emerald, fontWeight: 700, fontSize: 12 }}>Completed</span>
-                                <span style={{ color: T.textMuted, fontSize: 11 }}>Score: {displayScore}%</span>
+                              <div
+                                style={{
+                                  marginTop: 10,
+                                  padding: "10px 14px",
+                                  background: T.emeraldDim,
+                                  borderRadius: 8,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    color: T.emerald,
+                                    fontWeight: 700,
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  Completed
+                                </span>
+                                <span
+                                  style={{ color: T.textMuted, fontSize: 11 }}
+                                >
+                                  Score: {displayScore}%
+                                </span>
                               </div>
                             )}
                           </div>
@@ -17345,7 +17723,9 @@ const AdmContentView = () => {
                 {c.title}
               </span>
               {c.gamified && (
-                <Badge color={T.orange} size="xs">Gamified</Badge>
+                <Badge color={T.orange} size="xs">
+                  Gamified
+                </Badge>
               )}
             </div>
             <div style={{ display: "flex", gap: 5 }}>
