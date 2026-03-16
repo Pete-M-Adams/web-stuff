@@ -19853,6 +19853,56 @@ const AdmSettingsView = () => (
   </div>
 );
 
+// ── Global Search Index ──
+const SEARCH_INDEX = [
+  // Navigation views
+  { label:"Home Dashboard", hint:"Activity, alerts, leaderboard", view:"home", tag:"View" },
+  { label:"My Pathway", hint:"Remediation steps, gap analysis", view:"pathway", tag:"View" },
+  { label:"AI Tutor", hint:"HCP practice, deep dive, adaptive quiz", view:"tutor", tag:"View" },
+  { label:"Certifications", hint:"Echo scores, cert history, status", view:"certs", tag:"View" },
+  { label:"Competencies", hint:"Skill scores, quiz, sub-competencies", view:"competencies", tag:"View" },
+  { label:"Content Library", hint:"Courses, AI modules, workshops", view:"library", tag:"View" },
+  { label:"Coaching Hub", hint:"Development plan, strengths, insights", view:"coaching", tag:"View" },
+  { label:"Performance Insights", hint:"Readiness score, peer benchmarks", view:"insights", tag:"View" },
+  { label:"Pre-Call Prep", hint:"HCP profiles, call planning", view:"precall", tag:"View" },
+  { label:"Achievements", hint:"Badges, XP, milestones", view:"achievements", tag:"View" },
+  { label:"Peer Learning", hint:"Community posts, shared resources", view:"peer", tag:"View" },
+  { label:"My Profile", hint:"Role details, activity history, preferences", view:"profile", tag:"View" },
+  // Content library items
+  { label:"GLP-1 Receptor Agonist MOA Deep Dive", hint:"Course · Metabolic · 25 min", view:"library", tag:"Course" },
+  { label:"SELECT Trial Outcomes Summary", hint:"AI Module · Metabolic · 12 min", view:"library", tag:"AI Module" },
+  { label:"Competitive Positioning: Dupixent vs Rinvoq", hint:"AI Module · Dermatology · 15 min", view:"library", tag:"AI Module" },
+  { label:"Objection Handling: Payer Conversations", hint:"Workshop · Cross-TA · 35 min", view:"library", tag:"Workshop" },
+  { label:"Immunology Landscape 2026", hint:"Course · Immunology · 40 min", view:"library", tag:"Course" },
+  { label:"PCSK9 Inhibitors in Cardiology", hint:"Course · Cardiology · 30 min", view:"library", tag:"Course" },
+  { label:"Oncology Biomarker Testing Primer", hint:"AI Module · Oncology · 18 min", view:"library", tag:"AI Module" },
+  { label:"Compliance: Off-Label Communication", hint:"Compliance · Cross-TA · 20 min", view:"library", tag:"Compliance" },
+  // Certifications
+  { label:"Dupixent® Clinical Data Mastery", hint:"Certification · Dermatology · Certified", view:"certs", tag:"Cert" },
+  { label:"Keytruda® Indication Expansion", hint:"Certification · Oncology · Certified", view:"certs", tag:"Cert" },
+  { label:"Entresto® Cardiology Positioning", hint:"Certification · Cardiology · Certified", view:"certs", tag:"Cert" },
+  { label:"SKYRIZI® Objection Handling", hint:"Certification · Immunology · In Progress", view:"certs", tag:"Cert" },
+  { label:"Ozempic® Competitive Intel", hint:"Certification · Metabolic · Remediation", view:"certs", tag:"Cert" },
+  { label:"Reyvow® Product Launch", hint:"Certification · Neuroscience · Assigned", view:"certs", tag:"Cert" },
+  // Competencies
+  { label:"Clinical Knowledge", hint:"Competency · Score: 78 · MOA, trial data, safety", view:"competencies", tag:"Competency" },
+  { label:"Competitive Positioning", hint:"Competency · Score: 52 · MOA diff, payer strategy", view:"competencies", tag:"Competency" },
+  { label:"Objection Handling", hint:"Competency · Score: 65 · Formulary, value comms", view:"competencies", tag:"Competency" },
+  { label:"Selling Skills", hint:"Competency · Score: 74 · Call planning, follow-through", view:"competencies", tag:"Competency" },
+  { label:"Regulatory Compliance", hint:"Competency · Score: 91 · Off-label, fair balance", view:"competencies", tag:"Competency" },
+  { label:"Territory Management", hint:"Competency · Score: 70 · Prioritization, planning", view:"competencies", tag:"Competency" },
+];
+
+const tagColors = {
+  View: "#427BBF",
+  Course: "#0694A2",
+  "AI Module": "#7E3AF2",
+  Workshop: "#0694A2",
+  Compliance: "#B45309",
+  Cert: "#0E9F6E",
+  Competency: "#F58020",
+};
+
 // ═══════════════════════════════════════════════
 // MAIN APPLICATION — with Login, Landing, 3-Role
 // ═══════════════════════════════════════════════
@@ -20270,42 +20320,46 @@ export default function App() {
                     }}
                   />
                   <button
-                    onClick={() => {
-                      setSearchOpen(false);
-                      setSearchQ("");
-                    }}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      color: T.textMuted,
-                      cursor: "pointer",
-                      fontSize: 14,
-                      padding: "0 2px",
-                    }}
-                  >
-                    ×
-                  </button>
+                    onClick={() => { setSearchOpen(false); setSearchQ(""); }}
+                    style={{ background:"none",border:"none",color:T.textMuted,cursor:"pointer",fontSize:14,padding:"0 2px" }}
+                  >×</button>
                 </div>
               ) : (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: 8,
-                    border: `1px solid ${T.border}`,
-                    background: T.card,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    color: T.textMuted,
-                    transition: "all .15s",
-                  }}
+                  style={{ width:32,height:32,borderRadius:8,border:`1px solid ${T.border}`,background:T.card,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",color:T.textMuted,transition:"all .15s" }}
                 >
                   <Ico d={icons.search} size={14} />
                 </button>
               )}
+              {/* Search Results Dropdown */}
+              {searchOpen && searchQ.trim() && (() => {
+                const q = searchQ.toLowerCase();
+                const results = SEARCH_INDEX.filter(
+                  item => item.label.toLowerCase().includes(q) || item.hint.toLowerCase().includes(q)
+                ).slice(0, 8);
+                return (
+                  <div style={{ position:"absolute",top:"calc(100% + 6px)",right:0,width:340,background:T.panel,border:`1px solid ${T.border}`,borderRadius:12,boxShadow:"0 8px 32px rgba(0,0,0,.12)",zIndex:200,overflow:"hidden",animation:"fadeIn .15s ease" }}>
+                    {results.length === 0 ? (
+                      <div style={{ padding:"16px 18px",fontSize:12.5,color:T.textMuted }}>No results for "{searchQ}"</div>
+                    ) : (
+                      results.map((item, i) => (
+                        <div key={i} onClick={() => { setView(item.view); setSearchOpen(false); setSearchQ(""); }}
+                          style={{ display:"flex",alignItems:"center",gap:10,padding:"10px 16px",cursor:"pointer",borderBottom:i<results.length-1?`1px solid ${T.border}`:"none",transition:"background .1s" }}
+                          onMouseEnter={e => e.currentTarget.style.background=T.card}
+                          onMouseLeave={e => e.currentTarget.style.background="transparent"}
+                        >
+                          <div style={{ flex:1, minWidth:0 }}>
+                            <div style={{ fontSize:12.5,fontWeight:600,color:T.text,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>{item.label}</div>
+                            <div style={{ fontSize:11,color:T.textMuted,marginTop:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>{item.hint}</div>
+                          </div>
+                          <span style={{ fontSize:9.5,fontWeight:600,letterSpacing:.4,padding:"2px 7px",borderRadius:5,background:`${tagColors[item.tag]}14`,color:tagColors[item.tag],flexShrink:0 }}>{item.tag}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                );
+              })()}
             </div>
             {/* Notification Bell */}
             {role === "rep" && (
