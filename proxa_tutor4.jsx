@@ -14928,7 +14928,7 @@ const LoginPage = ({ onLogin }) => {
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <img
-            src="IH_horiz_full (1).png"
+            src="/IH_horiz_full.png"
             alt="InsiteHUB"
             style={{
               width: 400,
@@ -19349,7 +19349,7 @@ export default function App() {
           }}
         >
           <img
-            src="IH_horiz_full_ILE_left.png"
+            src="/IH_horiz_full_ILE_left.png"
             alt="InsiteHUB Intelligent Learning Environment"
             style={{ width: "100%", height: "auto", display: "block" }}
           />
