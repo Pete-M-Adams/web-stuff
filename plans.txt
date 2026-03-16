@@ -1,0 +1,75 @@
+sets of compentencies need to be mapped to each role in organization- sales enginner, account manager, cfo, etc
+
+handle assignments of trainings to employees based on their roles and competency gaps
+
+farring has content, they use linkedin learning, these can be word docs, ppts, videos, etc
+
+ideal scenario is: built a system that automatically assigns trainings to employees based on their roles and competency gaps- those pieces of content should already exist at least in Farring's case
+
+the goal is that this should be heavily personalized based on achievements of employees in their roles.
+
+this system needs to use competency maps provided by Farring to understand which trainings are relevant for each role, and then assign them to employees based on their competency gaps, taking into account their past achievements and performance.
+
+
+what needs to be done:
+
+brand everything like insitehub
+
+most important thing is connecting the roleplay tool and the proxa hub platform to communicate results from one roleplay session for demo purposes
+
+reword or add an additonal page to communicate "competency training"
+
+create an administrative login-- demonstrate how this content is connected
+
+set up a working session to get the admin panel figured out with pieces john wants
+
+ai tutor: should update based on echo sessions ending, pulls from DB, then starts a conversation about next steps
+
+
+
+
+
+3/11 Steve and John-
+
+bright white foreground container, warmer grayer background, blend columns
+
+hover orange, non hover column blend
+
+homepage-
+
+        -remediation active
+                -   first click in demo
+
+                - second click-- knowledge check-- john is making the quiz-- drops down from the continue button on       Knowledge Check — MOA Differentiation
+
+              -- john does quiz
+                - 3 turns to green check
+
+            -- personalized learning pathway
+            - drop emojis, shift text left, on quiz completion, bubble green check down
+
+            - opens up 4-- click to download pdf-- @@payer objection handling workshop pdf that john is making
+
+         AI tutor--
+
+                    -- change nothing about the quiz in there
+
+                        - turn gap aware and adaptive into buttons-- make it work like a lightswitch
+                        -- this needs to be an actual llm interface-- connect your gemini or claude account to this-- system prompts to play character with this information
+
+                        -- pause on this one
+                        --  llm speaks in the first person, identifies as " your ai tutor "
+                        -- john prompts something like
+                    adaptive: ad hoc converstaion that you start with the llm about any topic in the knowledge base
+
+         -- content library-- need one of these things to be clickable
+
+
+    -- add admin page toggle above sarah chen ++ flesh out same level of page
+
+    ---- EXTRA IMPORTANT
+    -- under certs tab-- Competencies  == click on a button and generate a quiz based on the competencies package john sent me, once that quiz is taken, there will be some pieces of content that help develop that compentency out ((do we have the necessary files?))
+
+    -- generate this shit wiht google?
+    -- or have potential fake content?
+    --

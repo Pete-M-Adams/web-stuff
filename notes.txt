@@ -1,0 +1,10 @@
+remove all but fire emojis on achievements screen
+fix gradient in my profile, home
+remove emojis from echo integration, system settings
+fix ai-tutor chat widget so it doesnt cover the "send" button in ai tutor
+remove emojis from dashboard, predictive insights, reports & export
+fix gradient in dashboard
+make quiz for knowledge check in my pathway
+
+one more thing from john's new files
+host on insitexai.com
