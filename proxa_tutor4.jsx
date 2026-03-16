@@ -16522,6 +16522,7 @@ const LandingPage = ({ onContinue, userName }) => {
                   icon: "",
                   status: "Synced",
                   color: T.emerald,
+                  url: "https://www.veeva.com/",
                 },
                 {
                   name: "Workday",
@@ -16529,6 +16530,7 @@ const LandingPage = ({ onContinue, userName }) => {
                   icon: "",
                   status: "Connected",
                   color: T.emerald,
+                  url: "https://www.workday.com/",
                 },
                 {
                   name: "MS Teams",
@@ -16536,6 +16538,7 @@ const LandingPage = ({ onContinue, userName }) => {
                   icon: "",
                   status: "Active",
                   color: T.emerald,
+                  url: "https://teams.microsoft.com/",
                 },
               ].map((tool, i) => (
                 <div
