@@ -16514,6 +16514,7 @@ const LandingPage = ({ onContinue, userName }) => {
                   icon: "",
                   status: "Connected",
                   color: T.emerald,
+                  url: "https://insitex.app/dashboard/",
                 },
                 {
                   name: "Veeva CRM",
@@ -16541,6 +16542,7 @@ const LandingPage = ({ onContinue, userName }) => {
                   key={i}
                   onMouseEnter={() => setHovBtn(`tool${i}`)}
                   onMouseLeave={() => setHovBtn(null)}
+                  onClick={() => tool.url && window.open(tool.url, "_blank")}
                   style={{
                     padding: "14px 12px",
                     borderRadius: 12,
