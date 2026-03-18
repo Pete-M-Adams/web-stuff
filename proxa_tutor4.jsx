@@ -14696,6 +14696,8 @@ const MgrReportsView = () => (
 // ═══════════════════════════════════════════════
 const PeerView = () => {
   const [tab, setTab] = useState("insights");
+  const [tipText, setTipText] = useState("");
+  const [tipShared, setTipShared] = useState(false);
 
   const topPerformerInsights = [
     {
@@ -15138,52 +15140,80 @@ const PeerView = () => {
               </span>
               <Badge color={T.textMuted} size="xs">Anonymized</Badge>
             </div>
-            <textarea
-              placeholder="Share what worked for you — a study technique, an AI Tutor strategy, a way you prepped for Echo... Your identity will be anonymized when shared."
-              style={{
-                width: "100%",
-                height: 70,
-                padding: "10px 14px",
-                borderRadius: 9,
-                border: `1px solid ${T.border}`,
-                background: T.cardRaised,
-                color: T.text,
-                fontSize: 12,
-                fontFamily: "'Outfit',sans-serif",
-                outline: "none",
-                resize: "none",
-                boxSizing: "border-box",
-                lineHeight: 1.5,
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: 8,
-              }}
-            >
-              <div style={{ display: "flex", gap: 6 }}>
-                <Badge color={T.textMuted} size="xs">Select certification</Badge>
-                <Badge color={T.textMuted} size="xs">Add competency tag</Badge>
-              </div>
-              <button
+            {tipShared ? (
+              <div
                 style={{
-                  padding: "7px 18px",
-                  borderRadius: 8,
-                  border: "none",
-                  background: T.blue,
-                  color: T.white,
-                  fontSize: 11.5,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  fontFamily: "'Outfit',sans-serif",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "12px 14px",
+                  borderRadius: 9,
+                  background: `${T.emerald}12`,
+                  border: `1px solid ${T.emerald}30`,
+                  animation: "fadeIn .25s ease",
                 }}
               >
-                Share Tip
-              </button>
-            </div>
+                <span style={{ fontSize: 16 }}>🙌</span>
+                <div>
+                  <p style={{ margin: 0, fontSize: 12.5, fontWeight: 600, color: T.emerald }}>Thanks for sharing!</p>
+                  <p style={{ margin: 0, fontSize: 11.5, color: T.textMuted }}>Your tip has been submitted anonymously.</p>
+                </div>
+              </div>
+            ) : (
+              <>
+                <textarea
+                  value={tipText}
+                  onChange={(e) => setTipText(e.target.value)}
+                  placeholder="Share what worked for you — a study technique, an AI Tutor strategy, a way you prepped for Echo... Your identity will be anonymized when shared."
+                  style={{
+                    width: "100%",
+                    height: 70,
+                    padding: "10px 14px",
+                    borderRadius: 9,
+                    border: `1px solid ${T.border}`,
+                    background: T.cardRaised,
+                    color: T.text,
+                    fontSize: 12,
+                    fontFamily: "'Outfit',sans-serif",
+                    outline: "none",
+                    resize: "none",
+                    boxSizing: "border-box",
+                    lineHeight: 1.5,
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: 8,
+                  }}
+                >
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <Badge color={T.textMuted} size="xs">Select certification</Badge>
+                    <Badge color={T.textMuted} size="xs">Add competency tag</Badge>
+                  </div>
+                  <button
+                    disabled={!tipText.trim()}
+                    onClick={() => { setTipShared(true); setTipText(""); }}
+                    style={{
+                      padding: "7px 18px",
+                      borderRadius: 8,
+                      border: "none",
+                      background: tipText.trim() ? T.blue : T.border,
+                      color: tipText.trim() ? T.white : T.textMuted,
+                      fontSize: 11.5,
+                      fontWeight: 600,
+                      cursor: tipText.trim() ? "pointer" : "default",
+                      fontFamily: "'Outfit',sans-serif",
+                      transition: "background .2s, color .2s",
+                    }}
+                  >
+                    Share Tip
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
           <p style={{ fontSize: 12.5, color: T.textMuted, margin: 0 }}>
