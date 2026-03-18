@@ -15100,6 +15100,92 @@ const PeerView = () => {
             animation: "fadeIn .25s ease",
           }}
         >
+          {/* Share a Tip Input */}
+          <div
+            style={{
+              background: T.card,
+              borderRadius: 13,
+              padding: "16px 20px",
+              border: `1px solid ${T.borderLight}`,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 10,
+              }}
+            >
+              <div
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 8,
+                  background: `${T.blue}15`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: T.blue,
+                }}
+              >
+                SC
+              </div>
+              <span style={{ fontSize: 12, fontWeight: 600, color: T.text }}>
+                Share a tip with your peers
+              </span>
+              <Badge color={T.textMuted} size="xs">Anonymized</Badge>
+            </div>
+            <textarea
+              placeholder="Share what worked for you — a study technique, an AI Tutor strategy, a way you prepped for Echo... Your identity will be anonymized when shared."
+              style={{
+                width: "100%",
+                height: 70,
+                padding: "10px 14px",
+                borderRadius: 9,
+                border: `1px solid ${T.border}`,
+                background: T.cardRaised,
+                color: T.text,
+                fontSize: 12,
+                fontFamily: "'Outfit',sans-serif",
+                outline: "none",
+                resize: "none",
+                boxSizing: "border-box",
+                lineHeight: 1.5,
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: 8,
+              }}
+            >
+              <div style={{ display: "flex", gap: 6 }}>
+                <Badge color={T.textMuted} size="xs">Select certification</Badge>
+                <Badge color={T.textMuted} size="xs">Add competency tag</Badge>
+              </div>
+              <button
+                style={{
+                  padding: "7px 18px",
+                  borderRadius: 8,
+                  border: "none",
+                  background: T.blue,
+                  color: T.white,
+                  fontSize: 11.5,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "'Outfit',sans-serif",
+                }}
+              >
+                Share Tip
+              </button>
+            </div>
+          </div>
+
           <p style={{ fontSize: 12.5, color: T.textMuted, margin: 0 }}>
             Tips shared by reps who recently passed certifications. All
             identities are anonymized.
